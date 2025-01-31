@@ -8,6 +8,6 @@ package movieticketbookingmanagementsystem;
  *
  * @author User
  */
-class FontAwesomeIconView {
+public class database {
     
 }
