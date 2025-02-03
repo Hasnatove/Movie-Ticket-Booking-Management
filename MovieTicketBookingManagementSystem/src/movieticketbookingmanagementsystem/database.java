@@ -15,9 +15,9 @@ import java.sql.SQLException;
 class database {
         public static Connection connectDb() {
         try {
-            String url = "jdbc:mysql://localhost:3306/moviebook"; // ডাটাবেজের নাম দিন
-            String user = "root"; // আপনার MySQL ইউজারনেম
-            String password = ""; // যদি পাসওয়ার্ড না থাকে, ফাঁকা রাখুন
+            String url = "jdbc:mysql://localhost:3306/moviebook"; 
+            String user = "root"; //
+            String password = ""; 
 
             return DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
