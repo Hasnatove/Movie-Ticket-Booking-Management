@@ -62,3 +62,23 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 .sinup-btn:hover{
     -fx-background-color: linear-gradient(to bottom right, #4d9a76, #45b796);
 }
+.signOut:hover{
+  -fx-background-color:#d62651;
+}
+.root {
+    -fx-background-color: #2196F3; 
+    
+}
+.card:hover{
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 5,0,0,0);
+}
+
+.card1{
+    -fx-background-color:linear-gradient(to right, #2b428c, #2e58ab);
+    -fx-background-radius: 0px 10px 10px 0px;   
+}
+
+.whitebg {
+    -fx-background-color: #fff;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,.3), 8,0,0,0);
+}
