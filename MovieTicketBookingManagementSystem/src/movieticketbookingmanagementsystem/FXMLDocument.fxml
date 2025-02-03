@@ -17,9 +17,9 @@
                   <Font name="Garamond Bold" size="30.0" />
                </font>
             </Label>
-            <TextField fx:id="signin_username" layoutX="203.0" layoutY="210.0" prefHeight="30.0" prefWidth="220.0" promptText="Username" styleClass="textfield" stylesheets="@designLogin.css" />
-            <PasswordField fx:id="signin_password" layoutX="203.0" layoutY="248.0" prefHeight="30.0" prefWidth="220.0" promptText="Password" styleClass="textfield" stylesheets="@designLogin.css" />
-            <Button fx:id="signin_loginBtn" layoutX="283.0" layoutY="288.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="79.0" styleClass="login-btn" stylesheets="@designLogin.css" text="Login">
+            <TextField fx:id="signin_username" layoutX="203.0" layoutY="210.0" onAction="#signIn" onKeyTyped="#signIn" prefHeight="30.0" prefWidth="220.0" promptText="Username" styleClass="textfield" stylesheets="@designLogin.css" />
+            <PasswordField fx:id="signin_password" layoutX="203.0" layoutY="248.0" onAction="#signIn" onKeyTyped="#signIn" prefHeight="30.0" prefWidth="220.0" promptText="Password" styleClass="textfield" stylesheets="@designLogin.css" />
+            <Button fx:id="signin_loginBtn" layoutX="283.0" layoutY="288.0" mnemonicParsing="false" onAction="#signIn" prefHeight="42.0" prefWidth="79.0" styleClass="login-btn" stylesheets="@designLogin.css" text="Login">
                <font>
                   <Font name="Lucida Sans Unicode" size="12.0" />
                </font>
@@ -39,7 +39,7 @@
             <TextField fx:id="signUp_username" layoutX="203.0" layoutY="223.0" prefHeight="30.0" prefWidth="220.0" promptText="Username" styleClass="textfield" stylesheets="@designLogin.css" />
             <TextField fx:id="signUp_email" layoutX="203.0" layoutY="179.0" prefHeight="30.0" prefWidth="220.0" promptText="Email address" styleClass="textfield" stylesheets="@designLogin.css" />
             <PasswordField fx:id="signUp_password" layoutX="203.0" layoutY="263.0" prefHeight="30.0" prefWidth="220.0" promptText="Password" styleClass="textfield" stylesheets="@designLogin.css" />
-            <Button fx:id="signUp_Btn" layoutX="283.0" layoutY="312.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="79.0" styleClass="signup-btn" stylesheets="@designLogin.css" text="SignUp">
+            <Button fx:id="signUp_Btn" layoutX="283.0" layoutY="312.0" mnemonicParsing="false" onAction="#signUp" prefHeight="42.0" prefWidth="79.0" styleClass="signup-btn" stylesheets="@designLogin.css" text="SignUp">
                <font>
                   <Font name="Lucida Sans Unicode" size="12.0" />
                </font>
