@@ -10,7 +10,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="419.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="movieticketbookingmanagementsystem.FXMLDocumentController">
    <children>
-      <AnchorPane fx:id="signin_form" prefHeight="419.0" prefWidth="602.0" styleClass="bg-form" stylesheets="@designLogin.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="signin_form" prefHeight="419.0" prefWidth="602.0" styleClass="bg-form" stylesheets="@designLogin.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label layoutX="277.0" layoutY="160.0" text="Sign In" textFill="WHITE">
                <font>
@@ -29,7 +29,7 @@
             <Button fx:id="signin_minimize" layoutX="483.0" layoutY="1.0" mnemonicParsing="false" onAction="#signIn_minimize" prefHeight="26.0" prefWidth="67.0" text="minimize" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="signUp_form" prefHeight="419.0" prefWidth="602.0" styleClass="bg-form" stylesheets="@designLogin.css">
+      <AnchorPane fx:id="signUp_form" prefHeight="419.0" prefWidth="602.0" styleClass="bg-form" stylesheets="@designLogin.css" visible="false">
          <children>
             <Label layoutX="249.0" layoutY="134.0" text="Sign Up" textFill="WHITE">
                <font>
