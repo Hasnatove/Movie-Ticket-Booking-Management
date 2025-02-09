@@ -2,6 +2,7 @@ package movieticketbookingmanagementsystem;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,14 +13,27 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+
+    import java.sql.Date;
+    import java.text.SimpleDateFormat;
 
 public class DashboardController implements Initializable {
 
-    @FXML private Button close, minimize, dashboard_btn, addMovies_btn, availableMovies_btn, editScreening_btn, customers_btn;
-    @FXML private Label username, signOut;
-    @FXML private AnchorPane dashboard_form, addMovies_form, availableMovies_form, editScreening_form, customers_form;
-    @FXML private TableView<?> addMovies_tableView, availableMovies_tableView, editScreening_tableView, customers_tableView;
-    @FXML private TextField customers_search, editScreening_search, addMovies_movieTitle, addMovies_genre, addMovies_duration, addMovies_date;
+    @FXML
+    private Button close, minimize, dashboard_btn, addMovies_btn, availableMovies_btn, editScreening_btn, customers_btn;
+    @FXML
+    private Label username, signOut;
+    @FXML
+    private AnchorPane dashboard_form, addMovies_form, availableMovies_form, editScreening_form, customers_form;
+    @FXML
+    private TableView<?> addMovies_tableView, availableMovies_tableView, editScreening_tableView, customers_tableView;
+    @FXML
+    private TextField customers_search, editScreening_search, addMovies_movieTitle, addMovies_genre, addMovies_duration, addMovies_date;
     @FXML
     private AnchorPane dashboard_totalSoldTicket;
     @FXML
@@ -184,6 +198,90 @@ public class DashboardController implements Initializable {
         customers_form.setVisible(false);
 
         form.setVisible(true);
-        form.setManaged(true); 
+        form.setManaged(true);
+    }
+
+
+@FXML
+private void addMovieInsert(ActionEvent event) {
+    String title = addMovies_movieTitle.getText();
+    String genre = addMovies_genre.getText();
+    String duration = addMovies_duration.getText();
+    String dateString = addMovies_date.getText();
+
+    // Validate the fields are not empty
+    if (title.isEmpty() || genre.isEmpty() || duration.isEmpty() || dateString.isEmpty()) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText("All fields must be filled!");
+        alert.showAndWait();
+        return;
+    }
+
+    
+    java.sql.Date date = null;
+    try {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date parsedDate = sdf.parse(dateString);
+        date = new java.sql.Date(parsedDate.getTime());
+    } catch (Exception e) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText("Invalid date format! Please use yyyy-MM-dd.");
+        alert.showAndWait();
+        return;
+    }
+
+    
+    String sql = "INSERT INTO movies (title, genre, duration, date) VALUES (?, ?, ?, ?)";
+
+    try (Connection conn = database.connectDb(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        stmt.setString(1, title);
+        stmt.setString(2, genre);
+        stmt.setString(3, duration);
+        stmt.setDate(4, date); // Set the date parameter as java.sql.Date
+
+        int rowsInserted = stmt.executeUpdate();
+        if (rowsInserted > 0) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText(null);
+            alert.setContentText("Movie added successfully!");
+            alert.showAndWait();
+        }
+
+        
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Database Error");
+        alert.setHeaderText(null);
+        alert.setContentText("An error occurred while adding the movie.");
+        alert.showAndWait();
+    }
+}
+
+
+    private void clearFields() {
+        addMovies_movieTitle.setText("");
+        addMovies_genre.setText("");
+        addMovies_duration.setText("");
+        addMovies_date.setText("");
+    }
+
+    @FXML
+    private void addMovieUpdate(ActionEvent event) {
+    }
+
+    @FXML
+    private void addMovieDelete(ActionEvent event) {
+    }
+
+    @FXML
+    private void addMovieClear(ActionEvent event) {
     }
 }

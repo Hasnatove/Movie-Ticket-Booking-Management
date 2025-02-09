@@ -167,10 +167,10 @@
                               <TextField fx:id="addMovies_duration" layoutX="92.0" layoutY="362.0" prefHeight="26.0" prefWidth="161.0" />
                               <Label layoutY="409.0" text="Published Date" />
                               <TextField fx:id="addMovies_date" layoutX="97.0" layoutY="405.0" prefHeight="26.0" prefWidth="161.0" />
-                              <Button fx:id="addMovies_insertBtn" layoutX="17.0" layoutY="450.0" mnemonicParsing="false" text="Insert" />
-                              <Button fx:id="addMovies_updateBtn" layoutX="102.0" layoutY="450.0" mnemonicParsing="false" text="Update" />
-                              <Button fx:id="addMovies_deleteBtn" layoutX="185.0" layoutY="450.0" mnemonicParsing="false" text="Delete" />
-                              <Button fx:id="addMovies_clearBtn" layoutX="16.0" layoutY="489.0" mnemonicParsing="false" text="Clear" />
+                              <Button fx:id="addMovies_insertBtn" layoutX="17.0" layoutY="450.0" mnemonicParsing="false" onAction="#addMovieInsert" text="Insert" />
+                              <Button fx:id="addMovies_updateBtn" layoutX="102.0" layoutY="450.0" mnemonicParsing="false" onAction="#addMovieUpdate" text="Update" />
+                              <Button fx:id="addMovies_deleteBtn" layoutX="185.0" layoutY="450.0" mnemonicParsing="false" onAction="#addMovieDelete" text="Delete" />
+                              <Button fx:id="addMovies_clearBtn" layoutX="16.0" layoutY="489.0" mnemonicParsing="false" onAction="#addMovieClear" text="Clear" />
                            </children>
                         </AnchorPane>
                         <AnchorPane fx:id="addMovies_search" layoutX="283.0" layoutY="13.0" prefHeight="534.0" prefWidth="498.0" styleClass="whitebg" stylesheets="@designLogin.css">
