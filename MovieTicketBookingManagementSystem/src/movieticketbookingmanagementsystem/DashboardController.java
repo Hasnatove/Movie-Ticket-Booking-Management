@@ -1,50 +1,25 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package movieticketbookingmanagementsystem;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author User
- */
 public class DashboardController implements Initializable {
 
-    @FXML
-    private Button close;
-    @FXML
-    private Button minimize;
-    @FXML
-    private Label username;
-    @FXML
-    private Button dashboard_btn;
-    @FXML
-    private Button addMovies_btn;
-    @FXML
-    private Button availableMovies_btn;
-    @FXML
-    private Button editScreening_btn;
-    @FXML
-    private Button customers_btn;
-    @FXML
-    private Label signOut;
-    @FXML
-    private AnchorPane dashboard_form;
+    @FXML private Button close, minimize, dashboard_btn, addMovies_btn, availableMovies_btn, editScreening_btn, customers_btn;
+    @FXML private Label username, signOut;
+    @FXML private AnchorPane dashboard_form, addMovies_form, availableMovies_form, editScreening_form, customers_form;
+    @FXML private TableView<?> addMovies_tableView, availableMovies_tableView, editScreening_tableView, customers_tableView;
+    @FXML private TextField customers_search, editScreening_search, addMovies_movieTitle, addMovies_genre, addMovies_duration, addMovies_date;
     @FXML
     private AnchorPane dashboard_totalSoldTicket;
     @FXML
@@ -52,19 +27,9 @@ public class DashboardController implements Initializable {
     @FXML
     private AnchorPane dashboard_availableMovies;
     @FXML
-    private AnchorPane addMovies_form;
-    @FXML
     private ImageView addMovies_imageView;
     @FXML
     private Button addMovies_import;
-    @FXML
-    private TextField addMovies_movieTitle;
-    @FXML
-    private TextField addMovies_genre;
-    @FXML
-    private TextField addMovies_duration;
-    @FXML
-    private TextField addMovies_date;
     @FXML
     private Button addMovies_insertBtn;
     @FXML
@@ -76,8 +41,6 @@ public class DashboardController implements Initializable {
     @FXML
     private AnchorPane addMovies_search;
     @FXML
-    private TableView<?> addMovies_tableView;
-    @FXML
     private TableColumn<?, ?> addMovies_Col_movieTitle;
     @FXML
     private TableColumn<?, ?> addMovies_Col_genre;
@@ -86,8 +49,6 @@ public class DashboardController implements Initializable {
     @FXML
     private TableColumn<?, ?> addMovies_Col_date;
     @FXML
-    private AnchorPane availableMovies_form;
-    @FXML
     private Label availableMovies_movieTitle;
     @FXML
     private Label availableMovies_genre;
@@ -95,8 +56,6 @@ public class DashboardController implements Initializable {
     private Label availableMovies_date;
     @FXML
     private Button availableMovies_selectMovie;
-    @FXML
-    private TableView<?> availableMovies_tableView;
     @FXML
     private TableColumn<?, ?> availableMovies_Col_movieTitle;
     @FXML
@@ -124,8 +83,6 @@ public class DashboardController implements Initializable {
     @FXML
     private Button availableMovies_clearBtn;
     @FXML
-    private AnchorPane editScreening_form;
-    @FXML
     private ImageView editScreening_imageView;
     @FXML
     private Label editScreening_title;
@@ -136,10 +93,6 @@ public class DashboardController implements Initializable {
     @FXML
     private Button editScreening_deleteBtn;
     @FXML
-    private TextField editScreening_search;
-    @FXML
-    private TableView<?> editScreening_tableView;
-    @FXML
     private TableColumn<?, ?> editScreening_Col_title;
     @FXML
     private TableColumn<?, ?> editScreening_Col_genre;
@@ -147,8 +100,6 @@ public class DashboardController implements Initializable {
     private TableColumn<?, ?> editScreening_Col_duration;
     @FXML
     private TableColumn<?, ?> editScreening_Col_current;
-    @FXML
-    private AnchorPane customers_form;
     @FXML
     private Label customers_ticketNumber;
     @FXML
@@ -164,8 +115,6 @@ public class DashboardController implements Initializable {
     @FXML
     private Button customers_deleteBtn;
     @FXML
-    private TableView<?> customers_tableView;
-    @FXML
     private TableColumn<?, ?> customers_Col_ticketNumber;
     @FXML
     private TableColumn<?, ?> customers_Col_movieTitle;
@@ -176,15 +125,65 @@ public class DashboardController implements Initializable {
     @FXML
     private TableColumn<?, ?> customers_Col_time;
     @FXML
-    private TextField customers_search;
-    
+    private AnchorPane mainform;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
+        setupButtonActions();
+    }
+
+    // Setup button actions
+    private void setupButtonActions() {
+        if (close != null) {
+            close.setOnAction(event -> {
+                Stage stage = (Stage) close.getScene().getWindow();
+                stage.close();
+            });
+        }
+
+        if (minimize != null) {
+            minimize.setOnAction(event -> {
+                Stage stage = (Stage) minimize.getScene().getWindow();
+                stage.setIconified(true);
+            });
+        }
+
+        if (signOut != null) {
+            signOut.setOnMouseClicked(event -> {
+                try {
+                    Stage stage = (Stage) signOut.getScene().getWindow();
+                    stage.close();
+
+                    Stage loginStage = new Stage();
+                    Parent root = FXMLLoader.load(getClass().getResource("dashboard.fxml"));
+
+                    Scene scene = new Scene(root);
+                    loginStage.setScene(scene);
+                    loginStage.show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Error loading login screen.");
+                }
+            });
+        }
+
+        // Form switching
+        dashboard_btn.setOnAction(event -> switchForm(dashboard_form));
+        addMovies_btn.setOnAction(event -> switchForm(addMovies_form));
+        availableMovies_btn.setOnAction(event -> switchForm(availableMovies_form));
+        editScreening_btn.setOnAction(event -> switchForm(editScreening_form));
+        customers_btn.setOnAction(event -> switchForm(customers_form));
+    }
+
+    // Switch between forms
+    private void switchForm(AnchorPane form) {
+        dashboard_form.setVisible(false);
+        addMovies_form.setVisible(false);
+        availableMovies_form.setVisible(false);
+        editScreening_form.setVisible(false);
+        customers_form.setVisible(false);
+
+        form.setVisible(true);
+        form.setManaged(true); 
+    }
 }

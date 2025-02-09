@@ -17,7 +17,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="movieticketbookingmanagementsystem.DashboardController">
+<AnchorPane fx:id="mainform" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="movieticketbookingmanagementsystem.DashboardController">
    <children>
       <BorderPane layoutX="219.0" layoutY="86.0" prefHeight="600.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -146,7 +146,7 @@
                         <AnchorPane layoutX="7.0" layoutY="221.0" prefHeight="309.0" prefWidth="786.0" styleClass="whitebg" stylesheets="@designLogin.css" />
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="addMovies_form" layoutX="170.0" layoutY="144.0" prefHeight="556.0" prefWidth="794.4" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="addMovies_form" layoutX="170.0" layoutY="144.0" prefHeight="556.0" prefWidth="794.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane layoutX="2.0" layoutY="16.0" prefHeight="534.0" prefWidth="258.0" styleClass="whitebg" stylesheets="@designLogin.css">
                            <opaqueInsets>
@@ -184,7 +184,6 @@
                                     <TableColumn minWidth="0.0" prefWidth="0.0" text="C2" />
                                 </columns>
                               </TableView>
-                              <TextField fx:id="addMovies_search" layoutX="14.0" layoutY="21.0" prefHeight="26.0" prefWidth="267.0" promptText="Search" />
                            </children>
                         </AnchorPane>
                      </children>
@@ -352,7 +351,7 @@
                         </AnchorPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="customers_form" layoutX="57.0" layoutY="170.0" prefHeight="556.0" prefWidth="794.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="customers_form" layoutX="57.0" layoutY="170.0" prefHeight="556.0" prefWidth="794.4" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <AnchorPane layoutX="4.0" layoutY="7.0" prefHeight="543.0" prefWidth="256.0" styleClass="whitebg" stylesheets="@designLogin.css">
                            <children>
