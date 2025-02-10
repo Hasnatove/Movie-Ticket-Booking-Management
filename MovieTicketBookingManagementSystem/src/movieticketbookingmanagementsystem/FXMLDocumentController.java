@@ -71,6 +71,7 @@ public class FXMLDocumentController implements Initializable {
     private TextField signin_username;
 
     // Method to switch between login and signup forms
+    @FXML
     public void switchForm(ActionEvent event) {
         if (event.getSource() == signin_createAccount) {
             signin_form.setVisible(false);
@@ -224,9 +225,10 @@ public class FXMLDocumentController implements Initializable {
         // Initialization logic (if needed)
     }
 
-    @FXML
-    private void signIn(KeyEvent event) {
-    }
+   
+
+
+
 
  
     

@@ -19,8 +19,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 
-    import java.sql.Date;
-    import java.text.SimpleDateFormat;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 public class DashboardController implements Initializable {
 
@@ -169,7 +169,7 @@ public class DashboardController implements Initializable {
                     stage.close();
 
                     Stage loginStage = new Stage();
-                    Parent root = FXMLLoader.load(getClass().getResource("dashboard.fxml"));
+                    Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
 
                     Scene scene = new Scene(root);
                     loginStage.setScene(scene);
@@ -201,15 +201,79 @@ public class DashboardController implements Initializable {
         form.setManaged(true);
     }
 
+    @FXML
+    private void addMovieInsert(ActionEvent event) {
+        String title = addMovies_movieTitle.getText();
+        String genre = addMovies_genre.getText();
+        String duration = addMovies_duration.getText();
+        String dateString = addMovies_date.getText();
 
-@FXML
-private void addMovieInsert(ActionEvent event) {
+        // Validate the fields are not empty
+        if (title.isEmpty() || genre.isEmpty() || duration.isEmpty() || dateString.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("All fields must be filled!");
+            alert.showAndWait();
+            return;
+        }
+
+        java.sql.Date date = null;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date parsedDate = sdf.parse(dateString);
+            date = new java.sql.Date(parsedDate.getTime());
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Invalid date format! Please use yyyy-MM-dd.");
+            alert.showAndWait();
+            return;
+        }
+
+        String sql = "INSERT INTO movies (title, genre, duration, date) VALUES (?, ?, ?, ?)";
+
+        try (Connection conn = database.connectDb(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, title);
+            stmt.setString(2, genre);
+            stmt.setString(3, duration);
+            stmt.setDate(4, date); // Set the date parameter as java.sql.Date
+
+            int rowsInserted = stmt.executeUpdate();
+            if (rowsInserted > 0) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Success");
+                alert.setHeaderText(null);
+                alert.setContentText("Movie added successfully!");
+                alert.showAndWait();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Database Error");
+            alert.setHeaderText(null);
+            alert.setContentText("An error occurred while adding the movie.");
+            alert.showAndWait();
+        }
+    }
+
+    private void clearFields() {
+        addMovies_movieTitle.setText("");
+        addMovies_genre.setText("");
+        addMovies_duration.setText("");
+        addMovies_date.setText("");
+    }
+
+ @FXML
+private void addMovieUpdate(ActionEvent event) {
+    // Get values from the input fields
     String title = addMovies_movieTitle.getText();
     String genre = addMovies_genre.getText();
     String duration = addMovies_duration.getText();
     String dateString = addMovies_date.getText();
 
-    // Validate the fields are not empty
+    // Validate that the fields are not empty
     if (title.isEmpty() || genre.isEmpty() || duration.isEmpty() || dateString.isEmpty()) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
@@ -219,7 +283,6 @@ private void addMovieInsert(ActionEvent event) {
         return;
     }
 
-    
     java.sql.Date date = null;
     try {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -234,54 +297,83 @@ private void addMovieInsert(ActionEvent event) {
         return;
     }
 
-    
-    String sql = "INSERT INTO movies (title, genre, duration, date) VALUES (?, ?, ?, ?)";
+    String sql = "UPDATE movies SET title = ?, genre = ?, duration = ?, date = ? WHERE title = ?";
 
     try (Connection conn = database.connectDb(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-
         stmt.setString(1, title);
         stmt.setString(2, genre);
         stmt.setString(3, duration);
-        stmt.setDate(4, date); // Set the date parameter as java.sql.Date
+        stmt.setDate(4, date); // Set the date parameter
+        stmt.setString(5, title); // Set the condition for updating by title
 
-        int rowsInserted = stmt.executeUpdate();
-        if (rowsInserted > 0) {
+        int rowsUpdated = stmt.executeUpdate();
+        if (rowsUpdated > 0) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Success");
             alert.setHeaderText(null);
-            alert.setContentText("Movie added successfully!");
+            alert.setContentText("Movie updated successfully!");
             alert.showAndWait();
         }
-
-        
-
     } catch (SQLException e) {
         e.printStackTrace();
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Database Error");
         alert.setHeaderText(null);
-        alert.setContentText("An error occurred while adding the movie.");
+        alert.setContentText("An error occurred while updating the movie.");
         alert.showAndWait();
     }
 }
 
+@FXML
+private void addMovieDelete(ActionEvent event) {
+    // Get the movie title from the input field
+    String title = addMovies_movieTitle.getText();
 
-    private void clearFields() {
-        addMovies_movieTitle.setText("");
-        addMovies_genre.setText("");
-        addMovies_duration.setText("");
-        addMovies_date.setText("");
+    // Validate that the title is not empty
+    if (title.isEmpty()) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText("Movie title must be provided!");
+        alert.showAndWait();
+        return;
     }
 
-    @FXML
-    private void addMovieUpdate(ActionEvent event) {
-    }
+    // SQL query to delete the movie by title
+    String sql = "DELETE FROM movies WHERE title = ?";
 
-    @FXML
-    private void addMovieDelete(ActionEvent event) {
-    }
+    try (Connection conn = database.connectDb(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setString(1, title); // Set the condition for deletion by title
 
-    @FXML
-    private void addMovieClear(ActionEvent event) {
+        int rowsDeleted = stmt.executeUpdate();
+        if (rowsDeleted > 0) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText(null);
+            alert.setContentText("Movie deleted successfully!");
+            alert.showAndWait();
+            clearFields(); // Clear the fields after deletion
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Database Error");
+        alert.setHeaderText(null);
+        alert.setContentText("An error occurred while deleting the movie.");
+        alert.showAndWait();
     }
+}
+
+@FXML
+private void addMovieClear(ActionEvent event) {
+    clearFields();
+}
+
+private void clear() {
+    addMovies_movieTitle.setText("");
+    addMovies_genre.setText("");
+    addMovies_duration.setText("");
+    addMovies_date.setText("");
+}
+
 }
